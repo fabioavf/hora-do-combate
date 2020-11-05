@@ -23,8 +23,8 @@ class Personagem{
 		int str = 1; // força
 		int dex = 1; // destreza
 		int agl = 1; // agilidade
-		int	con = 1; // conhecimento
-		int	vit = 1; // vitalidade
+		int con = 1; // conhecimento
+		int vit = 1; // vitalidade
 
   	public:
 		Personagem(std::string nome);
