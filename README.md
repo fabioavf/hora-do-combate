@@ -1,6 +1,7 @@
 # Hora do Combate!
 
 ## Desenvolvedores:
+
 * Fabio Amorelli Vieira Filho - 2020000253
 
 * Felipe Mendonça - 2018006788

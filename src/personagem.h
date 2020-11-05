@@ -15,72 +15,97 @@ class Personagem{
 		int xp;
 		int nivel;
 
-		int forca = 1,
-		    destreza = 1,
-		  	agilidade = 1,
-			inteligencia = 1,
-			vitalidade = 1;
+		int str = 1, // força
+		    dex = 1, // destreza
+		  	agl = 1, // agilidade
+			con = 1, // conhecimento
+			vit = 1; // vitalidade
 
   	public:
 		Personagem();
-		virtual ~Personagem() {}
+		virtual ~Personagem() = default;
 
-		virtual void Attack(Personagem&);
-		virtual void Defense();
-		virtual void sobeNivel();
+		virtual void attack(Personagem&);
+		virtual void levelUp();
 };
 
 class Swordmaster : public Personagem{
 	private:
-		int atkBoost; //Determina a defesa adicional que personagens da classe Swordmaster possuem.
+		int atkBoost = 0; // variável que se altera com o uso da habilidade atk boost do Swordmaster
+
 	public:
 		Swordmaster();
-		~Swordmaster() {}
+		~Swordmaster() = default;
 
-		void Attack(Personagem&);
-		void Defense();
-		void sobeNivel();
+		void attack(Personagem&);
+		void levelUp();
 
 		// Habilidades
+
+		// Estocada
+		// Atk Boost
+		// Sacrifício
 
 };
 
 class Marksman : public Personagem{
 	private:
-		int accuracy; //Muda para o valor 1 quando a função Aim eh chamada. Logo apos atacar, muda para 0 novamente.
-		int aimdamage; //determina dano extra ao mirar (Aim).
-		int headshot; //determina chance de um headshot, que mata o inimigo imediatamente.
+		int dexBoost = 0; // variável que se altera com o uso da habilidade dex boost do Marksman
+
 	public:
 		Marksman();
-		~Marksman(){}
-		void Aim(); //Faz com que o jogador perca 1 turno para "mirar", porem no outro turno o tiro tem dano extra.
+		~Marksman() = default;
+
+		// Habilidades
+
+		// Frechinha com powerup
+		// Dex Boost
+		// Legolas (habilidade OPzuda)
 };
 
 class Priest : public Personagem{
 	private:
-		int hpregen; //Priests regeneram uma quantidade de HP todo turno, pois sao abencoados.
-		int blessed; //Determina chance de evasiva, onde o golpe do inimigo eh anulado.
+		// Nada, por enquanto
+
 	public:
 		Priest();
 		~Priest(){}
+
+		// Habilidades
+
+		// Magiazinha melhor
+		// Cura HP
+		// Exorcismo
 };
 
 class Thief : public Personagem{
 	private:
-		int criticalchance; //Chance de critico dos Thiefs.
-		int poison; //Determina dano causado por veneno. Cada vez que o Thief acerta um inimigo, o dano do veneno aumenta.
+		int aglBoost = 0; // variável que se altera com o uso da habilidade agl boost do Thief
+
 	public:
 		Thief();
-		Thief(){}
+		Thief() = default;
+
+		// Habilidades
+		
+		// Ataque duplo
+		// Agl Boost
+		// Backstab
 };
 
 class Sorcerer : public Personagem{
 	private:
-		int magicpower; //Determina um bonus de ataque que personagens da classe Sorcerer possuem.
-		int devilchild; //Determina a chance de que o HP do sorcerer seja completamente regenerado durante um turno.
+		int intBoost; // variável que se altera com o uso da habilidade agl boost do Thief
+
 	public:
 		Sorcerer();
-		~Sorcerer(){}
+		~Sorcerer() = default;
+
+		// Habilidades
+
+		// Magiazinha melhor
+		// Int Boost
+		// Jaula Mágica
 };
 
 #endif
