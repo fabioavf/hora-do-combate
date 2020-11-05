@@ -1,32 +1,42 @@
 #ifndef PERSONAGEM_H
 #define PERSONAGEM_H
 
-#include <iostream>
 #include <string>
-
-using namespace std;
 
 class Personagem{
   	protected:
-		string name;
-		int hp;
-		int sp;
-		int ap;
-		int xp;
-		int nivel;
+		std::string name;
 
-		int str = 1, // força
-		    dex = 1, // destreza
-		  	agl = 1, // agilidade
-			con = 1, // conhecimento
-			vit = 1; // vitalidade
+		// stats
+
+		int hp; // health points, hp = 100 + 20 * (nivel - 5) + vit * 5
+		int sp; // skill points, sp = 100
+		int ap; // action points, ap = 2 no primeiro round e +1 por round
+		int xp; // experiencia ATUAL, teto de xp = 500 + 60 * (nivel - 5)
+		int nivel; // nivel inicial = 5, sobe toda vez que alcança o teto
+
+		int atk; 
+		int def;
+
+		// atributos
+
+		int str = 1; // força
+		int dex = 1; // destreza
+		int agl = 1; // agilidade
+		int	con = 1; // conhecimento
+		int	vit = 1; // vitalidade
 
   	public:
-		Personagem();
+		Personagem(std::string nome);
+		Personagem(std::string nome, int forca, int destr, int agil, int conhec, int vital);
 		virtual ~Personagem() = default;
 
-		virtual void attack(Personagem&);
-		virtual void levelUp();
+		void allocatePoint();
+		void updateStats();
+		void xpCheck();
+
+		virtual void attack(Personagem&) = 0;
+		virtual void levelUp() = 0;
 };
 
 class Swordmaster : public Personagem{
