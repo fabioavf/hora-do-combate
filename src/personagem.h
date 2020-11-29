@@ -1,7 +1,7 @@
 #ifndef PERSONAGEM_H
 #define PERSONAGEM_H
 
-#include <string>
+#include <iostream>
 
 class Personagem{
   	protected:
@@ -10,112 +10,130 @@ class Personagem{
 		// stats
 
 		int hp; // health points, hp = 100 + 20 * (nivel - 5) + vit * 5
-		int sp; // skill points, sp = 100
-		int ap; // action points, ap = 2 no primeiro round e +1 por round
-		int xp; // experiencia ATUAL, teto de xp = 500 + 60 * (nivel - 5)
-		int nivel; // nivel inicial = 5, sobe toda vez que alcança o teto
+		int nivel; // nivel inicial = 5, sobe toda vez que ganha uma luta
 
-		int atk; 
-		int def;
+		int atk; // quanto de dano dá no oponente
+		int def; // quanto de dano do oponente é mitigado
 
 		// atributos
 
-		int str = 1; // força
-		int dex = 1; // destreza
-		int agl = 1; // agilidade
-		int con = 1; // conhecimento
-		int vit = 1; // vitalidade
+		int str = 0; // força
+		int dex = 0; // destreza
+		int agl = 0; // agilidade
+		int con = 0; // conhecimento
+		int vit = 0; // vitalidade
+
+		bool contadorDef = 0;
 
   	public:
-		Personagem(std::string nome);
-		Personagem(std::string nome, int forca, int destr, int agil, int conhec, int vital);
+	  	Personagem() = default;
+		Personagem(std::string n, int lvl, int st, int dx, int ag, int cn, int vt) {
+			name  = n; nivel = lvl; str = st; dex = dx; agl = ag; con = cn; vit = vt;
+		};
+		Personagem(std::string n) : Personagem(n, 0, 0, 0, 0, 0, 0) { };
 		virtual ~Personagem() = default;
 
+		void setPoints();
 		void allocatePoint();
-		void updateStats();
-		void xpCheck();
+		void levelUp();
+		virtual void updateStats();
 
-		virtual void attack(Personagem&) = 0;
-		virtual void levelUp() = 0;
+		std::string getName() {return name;};
+		int getAtk() {return atk;};
+		int getDef() {return def;};
+		int getHP() {return hp;};
+
+		int getLvl() {return nivel;};
+		int getStr() {return str;};
+		int getDex() {return dex;};
+		int getAgl() {return agl;};
+		int getCon() {return con;};
+		int getVit() {return vit;};
+
+		void setLvl(int lvl) {nivel = lvl;};
+		void setStr(int st) {str = st;};
+		void setDex(int dx) {dex = dx;};
+		void setAgl(int ag) {agl = ag;};
+		void setCon(int cn) {con = cn;};
+		void setVit(int vt) {vit = vt;};
+
+
+		void takeHit(int dano) {
+			hp = hp - dano;
+		};
+
+		void attack(Personagem&);
+		void defend();
+
+		virtual std::string returnClassName() {return "Personagem";};
+
+		void printPersonagem();
 };
 
 class Swordmaster : public Personagem{
-	private:
-		int atkBoost = 0; // variável que se altera com o uso da habilidade atk boost do Swordmaster
-
 	public:
-		Swordmaster();
+		Swordmaster() = default;
+		Swordmaster(std::string n, int lvl, int st, int dx, int ag, int cn, int vt) 
+			: Personagem(n, lvl, st, dx, ag, cn, vt) { };
+		Swordmaster(std::string n) : Swordmaster(n, 0, 0, 0, 0, 0, 0) { };
 		~Swordmaster() = default;
 
-		void attack(Personagem&);
-		void levelUp();
+		void updateStats();
 
-		// Habilidades
-
-		// Estocada
-		// Atk Boost
-		// Sacrifício
+		std::string returnClassName() {return "Swordmaster";};
 
 };
 
 class Marksman : public Personagem{
-	private:
-		int dexBoost = 0; // variável que se altera com o uso da habilidade dex boost do Marksman
-
 	public:
-		Marksman();
+		Marksman() = default;
+		Marksman(std::string n, int lvl, int st, int dx, int ag, int cn, int vt) 
+			: Personagem(n, lvl, st, dx, ag, cn, vt) { };
+		Marksman(std::string n) : Marksman(n, 0, 0, 0, 0, 0, 0) { };
 		~Marksman() = default;
 
-		// Habilidades
+		void updateStats();
 
-		// Frechinha com powerup
-		// Dex Boost
-		// Legolas (habilidade OPzuda)
+		std::string returnClassName() {return "Marksman";};
 };
 
 class Priest : public Personagem{
-	private:
-		// Nada, por enquanto
-
 	public:
-		Priest();
-		~Priest(){}
+		Priest() = default;
+		Priest(std::string n, int lvl, int st, int dx, int ag, int cn, int vt) 
+			: Personagem(n, lvl, st, dx, ag, cn, vt) { };
+		Priest(std::string n) : Priest(n, 0, 0, 0, 0, 0, 0) { };
+		~Priest() = default;
 
-		// Habilidades
+		void updateStats();
 
-		// Magiazinha melhor
-		// Cura HP
-		// Exorcismo
+		std::string returnClassName() {return "Priest";};
 };
 
 class Thief : public Personagem{
-	private:
-		int aglBoost = 0; // variável que se altera com o uso da habilidade agl boost do Thief
-
 	public:
-		Thief();
 		Thief() = default;
+		Thief(std::string n, int lvl, int st, int dx, int ag, int cn, int vt) 
+			: Personagem(n, lvl, st, dx, ag, cn, vt) { };
+		Thief(std::string n) : Thief(n, 0, 0, 0, 0, 0, 0) { };
+		~Thief() = default;
 
-		// Habilidades
-		
-		// Ataque duplo
-		// Agl Boost
-		// Backstab
+		void updateStats();
+
+		std::string returnClassName() {return "Thief";};
 };
 
 class Sorcerer : public Personagem{
-	private:
-		int intBoost; // variável que se altera com o uso da habilidade agl boost do Thief
-
 	public:
-		Sorcerer();
+		Sorcerer() = default;
+		Sorcerer(std::string n, int lvl, int st, int dx, int ag, int cn, int vt) 
+			: Personagem(n, lvl, st, dx, ag, cn, vt) { };
+		Sorcerer(std::string n) : Sorcerer(n, 0, 0, 0, 0, 0, 0) { };
 		~Sorcerer() = default;
 
-		// Habilidades
+		void updateStats();
 
-		// Magiazinha melhor
-		// Int Boost
-		// Jaula Mágica
+		std::string returnClassName() {return "Sorcerer";};
 };
 
 #endif
